@@ -1,5 +1,5 @@
 from peewee import *
-from ....settings.private.db_config import DbConfig
+from ....settings.config.db_config import DbConfig
 
 
 
@@ -47,6 +47,18 @@ class CryptoFunk(BaseModel):
     class Meta:
         db_table = 'CryptoFunks'
 
+
+class Connection(BaseModel):
+    """
+    
+    """
+    host = CharField(null=True, default=None)
+    port = IntegerField(null=True, default=None)
+    connection_start_datetime = DateTimeField(null=True, default=None)
+    connection_end_datetime = DateTimeField(null=True, default=None)
+    
+    class Meta:
+        db_table = 'Connections'
 
 class MessageContent(BaseModel):
     """
@@ -125,3 +137,10 @@ class User_Chat(BaseModel):
 
     class Meta:
         db_table = 'Users_Chats'
+
+class User_Connection(BaseModel):
+    user_id = ForeignKeyField(User)
+    connection_id = ForeignKeyField(Connection)
+
+    class Meta:
+        db_table = 'Users_Connections'
