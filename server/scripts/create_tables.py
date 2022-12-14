@@ -1,5 +1,10 @@
 import sys
-sys.path.append("D:\HSE\прога\project3\messenger")
+
+
+PATH = "D:\HSE\прога\project3\messenger"
+sys.path.append(PATH)
+
+
 from server.server.db.db_scripts.db_scripts import MessagerDataBase
 from server.server.db.db_model.db_model import db
 
