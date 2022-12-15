@@ -47,6 +47,16 @@ class CryptoFunk(BaseModel):
     class Meta:
         db_table = 'CryptoFunks'
 
+class ClientStatement(BaseModel):
+    """
+    
+    """
+    name = CharField(null=True, default=None)
+    key = IntegerField(null=True, default=None)
+
+    class Meta:
+        db_table = 'Statements'
+
 
 class Connection(BaseModel):
     """
@@ -85,6 +95,7 @@ class User(BaseModel):
     last_online_date = DateField(null=True, default=None)
     last_online_time = TimeField(null=True, default=None)
     private_info = ForeignKeyField(PrivateHash)
+    client_state = ForeignKeyField(ClientStatement)
 
     class Meta:
         db_table = 'Users'
@@ -139,6 +150,9 @@ class User_Chat(BaseModel):
         db_table = 'Users_Chats'
 
 class User_Connection(BaseModel):
+    """
+    
+    """
     user_id = ForeignKeyField(User)
     connection_id = ForeignKeyField(Connection)
 
