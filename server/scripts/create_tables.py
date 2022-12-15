@@ -1,7 +1,7 @@
 import sys
 
 
-PATH = "D:\HSE\прога\project3\messenger"
+PATH = "D:\все с диска с\pyton\aip project messenger\messenger"
 sys.path.append(PATH)
 
 
