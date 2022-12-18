@@ -1,5 +1,5 @@
 from peewee import *
-from ....settings.config.db_config import DbConfig
+from ....settings.db_config import DbConfig
 
 
 
