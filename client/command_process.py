@@ -40,6 +40,8 @@ state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'L
             , 'PASS_UP':func.func5, 'PASS_REPEAT':func.func6, 'PASS_IN':func.func7, 'WAIT_FOR_SELECT':func.func8, 'SELECT_CHAT':func.func9
             , 'CREATE_CHAT':func.func10 ,'SELECT_USER':func.func11, 'WAIT_IN_CHAT':func.func12, 'SEND_HISTORY':func.func13
             , 'SEND_MESSAGE':func.func14, 'GET_MESSAGE':func.func15}
-User1 = user('Alex', 0, 10)
-state_func.get(state.state_names[User1.state])(User1)
-print(User1.state)
+
+if __name__ == "__main__":
+        User1 = user('Alex', 0, 10)
+        state_func.get(state.state_names[User1.state])(User1)
+        print(User1.state)
