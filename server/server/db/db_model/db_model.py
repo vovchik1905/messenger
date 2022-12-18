@@ -47,6 +47,16 @@ class CryptoFunk(BaseModel):
     class Meta:
         db_table = 'CryptoFunks'
 
+class ClientStatement(BaseModel):
+    """
+    
+    """
+    name = CharField(null=True, default=None)
+    key = IntegerField(null=True, default=None)
+
+    class Meta:
+        db_table = 'Statements'
+
 
 class Connection(BaseModel):
     """
