@@ -1,22 +1,26 @@
 from state_class import state
-from user_class import user
-from psycopg2 import OperationalError
+from db_class import *
+from peewee import *
+from ..server.server.db.db_model.db_model import *
+
+#conn = PostgresqlDatabase(db)
+#cursor = conn.cursor()
+#conn.close()
 
 class func:
-    def func0(User:user):
-            User.state = 0
-    def func1(User:user):
-            User.state = 1
-    def func2(User:user):
-            User.state = 2
-    def func3(User:user):
-            User.state = 3
-    def func4(User:user):
-            User.state = 4
-    def func5(User:user):
-            User.state = 5
-    def func6(User:user):
-            User.state = 6
+    def func0(Connection1:connection)->bool:
+        Connection.create(host = Connection1.host, port = Connection1.port, connection_start_datetime = Connection1.time)
+    def func1(login:str):
+        query = User.select().where(User.username == login)
+        if query.exists(): return True
+        else: return False
+    def func3(users:user, login:str):
+        users.name = login
+    def func5(users:user, password:str):
+        users.password = password
+    def func6(users:user, password:str)->bool:
+        if users.password == password: return True
+        else: return False
     def func7(User:user):
             User.state = 7
     def func8(User:user):
@@ -36,7 +40,7 @@ class func:
     def func15(User:user):
             User.state = 15
 
-state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'LOGIN_IN':func.func3, 'LOGIN_UP':func.func4
+state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func1, 'LOGIN_IN':func.func3, 'LOGIN_UP':func.func3
             , 'PASS_UP':func.func5, 'PASS_REPEAT':func.func6, 'PASS_IN':func.func7, 'WAIT_FOR_SELECT':func.func8, 'SELECT_CHAT':func.func9
             , 'CREATE_CHAT':func.func10 ,'SELECT_USER':func.func11, 'WAIT_IN_CHAT':func.func12, 'SEND_HISTORY':func.func13
             , 'SEND_MESSAGE':func.func14, 'GET_MESSAGE':func.func15}
