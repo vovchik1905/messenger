@@ -1,3 +1,5 @@
+from ..server.server.db.db_model.db_model import *
+
 def input_template(input_atribute:str, input_message:str = None)->str:
     while True:
         if not input_message: print("введите {input_atribute} \n")
@@ -17,9 +19,11 @@ class func:
     def func2():
         return input_template("пароль", "введите пароль повторно")
     def func3():
-        return 0
+        ID = User.get
+        Chat.get(Chat.creator_user == ID).chat_name
+        return input_template("название чата")
     def func4():
-        return 0
+        return input_template("имя пользователя")
     def func5():
         return input_template("текст сообщения")
 

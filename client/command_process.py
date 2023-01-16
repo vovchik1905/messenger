@@ -54,5 +54,6 @@ state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'L
 
 if __name__ == "__main__":
         User1 = user('Alex', 0, 0, 10)
-        state_func.get(state.state_names[User1.state])(User1)
-        print(User1.state)
+        #state_func.get(state.state_names[User1.state])(User1)
+        #print(User1.state)
+
