@@ -1,6 +1,4 @@
 import sys
-
-
 PATH = "D:\pyton\messenger-1"
 sys.path.append(PATH)
 

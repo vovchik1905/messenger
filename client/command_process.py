@@ -1,8 +1,12 @@
+import sys
+PATH = "D:\pyton\messenger-1"
+sys.path.append(PATH)
+
 from state_class import state
 from db_class import *
 from request_class import *
 from peewee import *
-from ..server.server.db.db_model.db_model import *
+from server.server.db.db_model.db_model import *
 
 
 class func:
@@ -53,7 +57,9 @@ state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'L
             , 'SEND_MESSAGE':func.func14, 'GET_MESSAGE':func.func15}
 
 if __name__ == "__main__":
-        User1 = user('Alex', 0, 0, 10)
-        #state_func.get(state.state_names[User1.state])(User1)
-        #print(User1.state)
+    connection1 = connection(1, 1, 1)
+    User1 = user('Alex', 0, 0, 5, connection1)
+    #state_func.get(state.state_names[User1.state])(User1)
+    #print(User1.state)
+    print(User.get(User.id == User1.id).private_info)
 

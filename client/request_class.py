@@ -1,4 +1,4 @@
-from ..server.server.db.db_model.db_model import *
+from server.server.db.db_model.db_model import *
 
 def input_template(input_atribute:str, input_message:str = None)->str:
     while True:
