@@ -58,8 +58,8 @@ state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'L
 
 if __name__ == "__main__":
     connection1 = connection(1, 1, 1)
-    User1 = user('Alex', 0, 0, 5, connection1)
-    #state_func.get(state.state_names[User1.state])(User1)
+    User1 = user('arseny', 0, 1, 1, connection1)
+    print(state_func.get(state.state_names[User1.state])(User1))
     #print(User1.state)
-    print(User.get(User.id == User1.id).private_info)
+    #print(User.get(User.id == User1.id).private_info)
 
