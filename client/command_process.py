@@ -25,24 +25,27 @@ class func:
     def func6(users:user)->bool:
         if users.password == request.get('PASSWORD_REPEAT'): return True
         else: return False
-    def func7(User:user):
-        User.state = 7
-    def func8(User:user):
-        User.state = 8
-    def func9(User:user):
-        User.state = 9
-    def func10(User:user):
-        User.state = 10
-    def func11(User:user):
-        User.state = 11
-    def func12(User:user):
-        User.state = 12
-    def func13(User:user):
-        User.state = 13
-    def func14(User:user):
-        User.state = 14
-    def func15(User:user):
-        User.state = 15
+    def func7(users:user):
+        ID = User.get(User.id == users.id).private_info
+        if PrivateHash.get(PrivateHash.id == ID).password == request.get('PASSWORD'): return True
+        else: return False
+    def func8(users:user):#пока пропущу потому что хз что здесь писать
+        users.state = 8
+    def func9(users:user):
+        
+        request.get('CHAT_SELECT')
+    def func10(users:user):
+        users.state = 10
+    def func11(users:user):
+        users.state = 11
+    def func12(users:user):
+        users.state = 12
+    def func13(users:user):
+        users.state = 13
+    def func14(users:user):
+        users.state = 14
+    def func15(users:user):
+        users.state = 15
 
 state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'LOGIN_IN':func.func3, 'LOGIN_UP':func.func4
             , 'PASS_UP':func.func5, 'PASS_REPEAT':func.func6, 'PASS_IN':func.func7, 'WAIT_FOR_SELECT':func.func8, 'SELECT_CHAT':func.func9
