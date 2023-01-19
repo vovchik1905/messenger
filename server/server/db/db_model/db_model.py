@@ -27,26 +27,6 @@ class PrivateHash(BaseModel):
     class Meta:
         db_table = 'PrivateHashs'
 
-
-class PrivateKey(BaseModel):
-    """
-    
-    """
-    key = CharField(null=True, default=None)
-    
-    class Meta:
-        db_table = 'PrivateKeys'
-
-
-class CryptoFunk(BaseModel):
-    """
-    
-    """
-    funk = CharField(null=True, default=None)
-
-    class Meta:
-        db_table = 'CryptoFunks'
-
 class ClientStatement(BaseModel):
     """
     
@@ -75,11 +55,8 @@ class MessageContent(BaseModel):
     
     """
     content = BlobField(null=True, default=None)
-    content_type = CharField(null=True, default=None)
     content_date = DateField(null=True, default=None)
     content_time = TimeField(null=True, default=None)
-    content_key = ForeignKeyField(PrivateKey)
-    crypto_funk = ForeignKeyField(CryptoFunk)
 
     class Meta:
         db_table = 'MessageContents'
@@ -92,8 +69,6 @@ class User(BaseModel):
     username = CharField(null=True, default=None)
     create_date = DateField(null=True, default=None)
     create_time = TimeField(null=True, default=None)
-    last_online_date = DateField(null=True, default=None)
-    last_online_time = TimeField(null=True, default=None)
     private_info = ForeignKeyField(PrivateHash)
 
     class Meta:

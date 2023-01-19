@@ -22,9 +22,9 @@ class MessagerDataBase(metaclass=Singleton):
 
     def create_tables(self) -> bool:
         with self.db:
-            self.db.create_tables([PrivateHash, PrivateKey,
+            self.db.create_tables([PrivateHash,
                                     ClientStatement,
-                                    CryptoFunk, Connection,
+                                    Connection,
                                     MessageContent, User,
                                     Chat, Message,
                                     User_Chat, Chat_Message,

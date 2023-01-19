@@ -7,6 +7,7 @@ from db_class import *
 from request_class import *
 from peewee import *
 from server.server.db.db_model.db_model import *
+from datetime import datetime
 
 
 class func:
@@ -41,12 +42,21 @@ class func:
         Name = request.get('CHAT_SELECT')
         users.curr_chat = Chat.get(Chat.chat_name == Name).chat_id
     def func8(users:user):
-        chat_name = request.get('CHAT_SELECT')
+        chat_name_ = request.get('CHAT_SELECT')
         user_name = request.get('CHAT_CREATE')
-        query = User.get(User.username == user_name).id
-        if query.exists(): 
+        second_user_id = User.get(User.username == user_name).id
+        if second_user_id.exists():
+            creation_date = datetime.date()
+            creation_time = datetime.time() 
+            created_chat = Chat.create(creator_user = users.id, create_date = creation_date,  create_time = creation_time, chat_name = chat_name_)
+            User_Chat.create(user_id = users.id, chat_id = created_chat.id)
+            User_Chat.create(user_id = second_user_id, chat_id = created_chat.id)
             
-        else: return False
+            return True
+        else:
+            print("такого пользователся не существует\n")
+            return False
+
     def func9(users:user):#ждем
         users.state = 12
     def func10(users:user):#пока без подгрузки истории ибо ну его нахуй
@@ -57,6 +67,9 @@ class func:
     def func11(users:user):
         message_ = request.get('TYPE_MESSAGE')
         #client.send(message)
+        creation_date = datetime.date()
+        creation_time = datetime.time()
+        MessageContent.create(content = message_, content_date = creation_date, content_time = creation_time)
 
 state_func = {'START':func.func0, 'LOGIN_IN':func.func1, 'LOGIN_UP':func.func2, 'PASS_IN':func.func3
             , 'PASS_UP':func.func4, 'PASS_REPEAT':func.func5, 'WAIT_FOR_SELECT':func.func6, 'SELECT_CHAT':func.func7
