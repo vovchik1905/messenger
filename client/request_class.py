@@ -1,12 +1,16 @@
 from server.server.db.db_model.db_model import *
+from client.cmd import *
 
 def input_template(input_atribute:str, input_message:str = None)->str:
     while True:
-        if not input_message: print("введите {input_atribute} \n")
-        else: print(input_message + "\n")
+        if not input_message: print("введите {input_atribute}")
+        else: print(input_message)
         output = input()
+
+        if Check_for_cmd(output): cmd.get(output)()
+
         if output == None:
-            print ("поле {input_atribute} нельзя оставить пустым\n")
+            print ("поле {input_atribute} нельзя оставить пустым")
             continue
         else:
             return output
@@ -19,8 +23,6 @@ class func:
     def func2():
         return input_template("пароль", "введите пароль повторно")
     def func3():
-        ID = User.get
-        Chat.get(Chat.creator_user == ID).chat_name
         return input_template("название чата")
     def func4():
         return input_template("имя пользователя")
