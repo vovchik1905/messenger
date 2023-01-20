@@ -22,8 +22,8 @@ def Choose_state(users:user)->int:
             list.append(state.state_names[state.tree[users.state][i]])
             string = state.phrase.get(i+1)
             print(string, list[i])
-        answer = state.state_names.index(input())
-        return answer
+        answer = input()
+        return state.state_names.index(answer)
 
 if __name__ == "__main__":
     User1 = user('arseny', 0, 0, 0)

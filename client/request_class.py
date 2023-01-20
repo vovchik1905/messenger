@@ -1,21 +1,20 @@
-from server.server.db.db_model.db_model import *
 from client.cmd import *
 
 def input_template(input_atribute:str, input_message:str = None)->str:
     while True:
-        if not input_message: print("введите {input_atribute}")
+        if input_message is None: print("введите", input_atribute)
         else: print(input_message)
         output = input()
 
         if Check_for_cmd(output): cmd.get(output)()
 
-        if output == None:
-            print ("поле {input_atribute} нельзя оставить пустым")
+        if output is None:
+            print ("поле", input_atribute, "нельзя оставить пустым")
             continue
         else:
             return output
 
-class func:
+"""class func:
     def func0():
         return input_template("логин")
     def func1():
@@ -30,4 +29,5 @@ class func:
         return input_template("текст сообщения")
 
 request = {'LOGIN':func.func0, 'PASSWORD':func.func1, 'PASSWORD_REPEAT':func.func2,
-'CHAT_SELECT':func.func3,'CHAT_CREATE':func.func4,'TYPE_MESSAGE':func.func5}
+'CHAT_SELECT':func.func3,'CHAT_CREATE':func.func4,'TYPE_MESSAGE':func.func5}"""
+    
