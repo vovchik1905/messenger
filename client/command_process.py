@@ -29,8 +29,9 @@ class func:
         else: users.state = Choose_state(users)
 
     def func3(users:user):
-        ID = User.select().where(User.id == users.id).get().private_info
-        if PrivateHash.select().where(PrivateHash.id == ID).get().password == input_template("пароль"): users.state = Choose_state(users)
+        user_id = User.select().where(User.username == users.login).get().id
+        password_id = User.select().where(User.id == user_id).get().private_info
+        if PrivateHash.select().where(PrivateHash.id == password_id).get().password == input_template("пароль"): users.state = Choose_state(users)
         else: print("введен неверный пароль")
 
     def func4(users:user):
@@ -104,7 +105,7 @@ state_func = {'START':func.func0, 'LOGIN_IN':func.func1, 'LOGIN_UP':func.func2, 
 
 if __name__ == "__main__":
     connection1 = connection(1, 1, 1)
-    User1 = user('arseny', 'kysa', 7, 4, connection1)
+    User1 = user('arseny', 'kysa', 3, 4, connection1)
     
     state_func.get(state.state_names[User1.state])(User1)
     print(User1.state)
