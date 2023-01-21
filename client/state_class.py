@@ -1,4 +1,5 @@
 from db_class import user
+from client.cmd import *
 
 class state:
     tree = ([1, 2], [3], [4], [6], [5], [6], [7, 8], [9], [9], [10, 11] ,[9], [9])
@@ -20,10 +21,16 @@ def Choose_state(users:user)->int:
         list = []
         for i in range(len(state.tree[users.state])):
             list.append(state.state_names[state.tree[users.state][i]])
-            string = state.phrase.get(i+1)
+            string = state.phrase.get(state.state_names.index(list[i]))
             print(string, list[i])
         answer = input()
-        return state.state_names.index(answer)
+        if Check_for_cmd(answer): cmd.get(answer)()
+        if answer in list:
+            return state.state_names.index(answer)
+        else:
+            print("введенная команда не распознана, попробуйте еще раз")
+            return users.state
+
 
 if __name__ == "__main__":
     User1 = user('arseny', 0, 0, 0)

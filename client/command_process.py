@@ -45,12 +45,12 @@ class func:
         users.state = Choose_state(users)
 
     def func7(users:user):
-        query = User_Chat.get(User_Chat.user_id == users.id).chat_id
+        query = User_Chat.select(User_Chat.chat_id).where(User_Chat.user_id == users.id).get().chat_id
         print("названия доступных чатов")
         for ID in query:
             print(Chat.get(Chat.id == ID).chat_name)
         Name = input_template("название чата")
-        input_chat_id = Chat.get(Chat.chat_name == Name).chat_id
+        input_chat_id = Chat.select(Chat.id).where(Chat.chat_name == Name).get().id
         if input_chat_id is not None:
             users.curr_chat = input_chat_id
             users.state = Choose_state(users)
@@ -60,7 +60,7 @@ class func:
     def func8(users:user):
         user_name = input_template("имя пользователя")
         chat_name_ = input_template("название чата")
-        second_user_id = User.get(User.username == user_name).id
+        second_user_id = User.select(User.id).where(User.username == user_name).get().id
         if second_user_id.exists():
             creation_date = datetime.now().date()
             creation_time = datetime.now().time() 
@@ -96,7 +96,7 @@ state_func = {'START':func.func0, 'LOGIN_IN':func.func1, 'LOGIN_UP':func.func2, 
 
 if __name__ == "__main__":
     connection1 = connection(1, 1, 1)
-    User1 = user('arseny', 0, 3, 4, connection1)
+    User1 = user('arseny', 'kysa', 10, 4, connection1)
     #ID = User.select(User.private_info).where(User.id == User1.id).get().private_info
     #if PrivateHash.select(PrivateHash.password).where(PrivateHash.id == ID).get().password == input_template("пароль"): print("Sucsesssss")
     
