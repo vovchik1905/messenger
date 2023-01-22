@@ -8,10 +8,11 @@ from input_functions import *
 from peewee import *
 from server.server.db.db_model.db_model import *
 from datetime import datetime
+from color_print import *
 
 
 class func:
-    def func0(users:user)->state:#ожидание
+    def func0(users:user)->state:#ожидание/начало дерева
         return Choose_state(users)
         #Connection.create(host = users.connection_.host, port = users.connection_.port, connection_start_datetime = datetime.now())
         
@@ -26,7 +27,7 @@ class func:
             users.id = user_row.get().id 
             return Choose_state(users)
         else: 
-            print("введен неверный логин, попробуйте еще раз")
+            red_text("введен неверный логин, попробуйте еще раз")
             return users.state
 
     def func2(users:user)->state:#create login
@@ -38,7 +39,7 @@ class func:
 
         query = User.select().where(User.username == users.login)
         if query.exists(): 
-            print("пользователь с таким логином уже существует\nпопробуйте ввести другой логин")
+            red_text("пользователь с таким логином уже существует\nпопробуйте ввести другой логин")
             return users.state
         else: return Choose_state(users)
 
@@ -146,7 +147,7 @@ class func:
         quit()
 
 
-state_func = {'START':func.func0, 'LOGIN_IN':func.func1, 'LOGIN_UP':func.func2, 'PASS_IN':func.func3
+state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'PASS_IN':func.func3
             , 'PASS_UP':func.func4, 'PASS_REPEAT':func.func5, 'WAIT_FOR_SELECT':func.func6, 'SELECT_CHAT':func.func7
             , 'CREATE_CHAT':func.func8 , 'WAIT_IN_CHAT':func.func9, 'SEND_HISTORY':func.func10
             , 'SEND_MESSAGE':func.func11, 'EXIT':func.func12}
