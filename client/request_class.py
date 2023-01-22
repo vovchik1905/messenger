@@ -6,8 +6,6 @@ def input_template(input_atribute:str, input_message:str = None)->str:
         else: print(input_message)
         output = input()
 
-        if Check_for_cmd(output): cmd.get(output)()
-
         if output is None:
             print ("поле", input_atribute, "нельзя оставить пустым")
             continue

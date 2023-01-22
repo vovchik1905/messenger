@@ -133,7 +133,6 @@ class func:
         return Choose_state(users)
     
     def func12(users:user)->state:#выход
-        users.state = 0
         quit()
 
 

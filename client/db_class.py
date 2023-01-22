@@ -1,6 +1,6 @@
         
 class connection:
-    def __init__(self, host, port, time):
+    def __init__(self, host, port, time = None):
         self.host = host
         self.port = port
         self.time = time
