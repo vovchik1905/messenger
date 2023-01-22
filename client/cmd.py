@@ -1,5 +1,8 @@
 from db_class import *
 from state_class import state
+from server.server.db.db_model.db_model import *
+from datetime import datetime
+
 
 cmd_list = ('BACK', 'EXIT')
 
@@ -11,9 +14,11 @@ def Check_for_cmd(string)->bool:
 
 class cmd_func:
     def func0(users:user):
+        if(users.state == state.state_names.index('WAIT_FOR_SELECT')):
+            Connection.update(connection_end_datetime = datetime.now())
         return state.reverse_tree[users.state][0]
     def func1(users:user):
-        return 12
+        return state.state_names.index('EXIT')
 
 cmd = {'BACK':cmd_func.func0, 'EXIT':cmd_func.func1}
 

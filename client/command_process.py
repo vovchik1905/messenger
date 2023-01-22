@@ -15,7 +15,7 @@ class func:
         return Choose_state(users)
         #Connection.create(host = users.connection_.host, port = users.connection_.port, connection_start_datetime = datetime.now())
         
-    def func1(users:user)->state:
+    def func1(users:user)->state:#login while sing in
 
         answer = input_template("логин")
         if Check_for_cmd(answer): return cmd.get(answer)(users)
@@ -27,7 +27,7 @@ class func:
             print("введен неверный логин, попробуйте еще раз")
             return users.state
 
-    def func2(users:user)->state:
+    def func2(users:user)->state:#create login
 
         answer = input_template("логин")
         if Check_for_cmd(answer): 
@@ -40,7 +40,7 @@ class func:
             return users.state
         else: return Choose_state(users)
 
-    def func3(users:user)->state:
+    def func3(users:user)->state:#password input while sing in
         user_id = User.select().where(User.username == users.login).get().id
         password_id = User.select().where(User.id == user_id).get().private_info
 
@@ -52,12 +52,12 @@ class func:
             print("введен неверный пароль")
             return users.state
 
-    def func4(users:user)->state:
+    def func4(users:user)->state:#password creation
         users.password = input_template("пароль")
         if Check_for_cmd(users.password): return cmd.get(users.password)(users)
         else: return Choose_state(users)
 
-    def func5(users:user)->state:
+    def func5(users:user)->state:#password creation repeat
         repeat_password = input_template("пароль", "введите пароль повторно")
         if Check_for_cmd(repeat_password): return cmd.get(repeat_password)(users)
 
@@ -66,10 +66,10 @@ class func:
             print("введенные пароли не совпадают")
             return users.state
 
-    def func6(users:user)->state:#ожидание
+    def func6(users:user)->state:#wait in menu
         return Choose_state(users)
 
-    def func7(users:user):
+    def func7(users:user):#select chat
         chat_list = User_Chat.select().where(User_Chat.user_id == users.id)
         if chat_list.exists():
             print("названия доступных чатов:")
@@ -90,7 +90,7 @@ class func:
             print("у вас пока нет доступых чатов")
             return state.reverse_tree[users.state][0]
 
-    def func8(users:user):
+    def func8(users:user):#create chat
         user_name = input_template("имя пользователя")
         if Check_for_cmd(user_name): return cmd.get(user_name)(users)
 
@@ -113,16 +113,16 @@ class func:
             print("пользователь, которого вы хотите добавить в чат ,не найден")
             return users.state
 
-    def func9(users:user):#ждем
+    def func9(users:user):#wait in chat
         return Choose_state(users)
 
-    def func10(users:user)->state:#пока без подгрузки истории
+    def func10(users:user)->state:#message history
         #query = Chat_Message.get(Chat_Message.chat_id == users.curr_chat).message_id
         #query_2 = Message.select().where(Message.id in query).order_by(Message.create_date).get().content.id
         print("подгрузка сообщений пока не доступна")
         return Choose_state(users)
         
-    def func11(users:user)->state:
+    def func11(users:user)->state:#send messages
         message_ = input_template("текст сообщения")
         if Check_for_cmd(message_): 
             return cmd.get(message_)(users)
@@ -133,7 +133,7 @@ class func:
         return Choose_state(users)
     
     def func12(users:user)->state:#выход
-        quit()
+        quit
 
 
 state_func = {'START':func.func0, 'LOGIN_IN':func.func1, 'LOGIN_UP':func.func2, 'PASS_IN':func.func3
