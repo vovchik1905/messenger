@@ -1,4 +1,4 @@
-from client.local_objects import *
+from local_objects import *
 from state_class import state
 from server.server.db.db_model.db_model import *
 from datetime import datetime

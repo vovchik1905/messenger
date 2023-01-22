@@ -1,11 +1,11 @@
-from client.local_objects import *
-from command_process import *
+from local_objects import *
+from main_functions import *
 from state_class import state
 
 def client_handle():
 
-    PORT = 0
-    HOST = 0
+    PORT = 5001
+    HOST = 'localhost'
 
     main_connection = connection(PORT, HOST)
     main_user = user('arseny', 0, 0, 0, main_connection)
