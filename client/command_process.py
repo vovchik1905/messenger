@@ -21,8 +21,10 @@ class func:
         if Check_for_cmd(answer): return cmd.get(answer)(users)
         users.login = answer
 
-        query = User.select().where(User.username == users.login)
-        if query.exists(): return Choose_state(users)
+        user_row = User.select().where(User.username == users.login)
+        if user_row.exists():
+            users.id = user_row.get().id 
+            return Choose_state(users)
         else: 
             print("введен неверный логин, попробуйте еще раз")
             return users.state
@@ -61,7 +63,11 @@ class func:
         repeat_password = input_template("пароль", "введите пароль повторно")
         if Check_for_cmd(repeat_password): return cmd.get(repeat_password)(users)
 
-        if users.password == repeat_password: return Choose_state(users)
+        if users.password == repeat_password: 
+            new_row_id = PrivateHash.insert(password = users.password).execute()
+            new_user_id = User.insert(username = users.login, create_date = datetime.now().date(), create_time = datetime.now().time(), private_info = new_row_id).execute()
+            users.id = new_user_id
+            return Choose_state(users)
         else: 
             print("введенные пароли не совпадают")
             return users.state
@@ -82,7 +88,7 @@ class func:
             input_chat_id = Chat.select(Chat.id).where(Chat.chat_name == Name).get().id
             if input_chat_id is not None:
                 users.curr_chat = input_chat_id
-                users.state = Choose_state(users)
+                return Choose_state(users)
             else:
                 print("введено неверное название чата")
                 return users.state
@@ -95,6 +101,7 @@ class func:
         if Check_for_cmd(user_name): return cmd.get(user_name)(users)
 
         second_user_id = User.select().where(User.username == user_name)
+
         if second_user_id.exists():
             print("пользователь найден")
             chat_name_ = input_template("название чата")
@@ -104,9 +111,10 @@ class func:
 
             creation_date = datetime.now().date()
             creation_time = datetime.now().time() 
-            created_chat = Chat.create(creator_user = users.id, create_date = creation_date,  create_time = creation_time, chat_name = chat_name_)
-            User_Chat.create(user_id = users.id, chat_id = created_chat.id)
-            User_Chat.create(user_id = second_user_id, chat_id = created_chat.id)
+            created_chat_id = Chat.insert(creator_user = users.id, create_date = creation_date,  create_time = creation_time, chat_name = chat_name_).execute()
+            User_Chat.create(user_id = users.id, chat_id = created_chat_id)
+            User_Chat.create(user_id = second_user_id, chat_id = created_chat_id)
+            users.curr_chat = created_chat_id
             
             return Choose_state(users)
         else:
@@ -129,11 +137,13 @@ class func:
 
         creation_date = datetime.date()
         creation_time = datetime.time()
-        MessageContent.create(content = message_, content_date = creation_date, content_time = creation_time)
+        message_content_id = MessageContent.insert(content = message_, content_date = creation_date, content_time = creation_time).execute()
+        created_message_id = Message.insert(creator_user_id = users.id, create_date = creation_date, create_time = creation_time, content_id = message_content_id).execute()
+        Chat_Message.insert(chat_id = users.curr_chat, message_id = created_message_id)
         return Choose_state(users)
     
-    def func12(users:user)->state:#выход
-        quit
+    def func12(users:user)->state:#exit
+        quit()
 
 
 state_func = {'START':func.func0, 'LOGIN_IN':func.func1, 'LOGIN_UP':func.func2, 'PASS_IN':func.func3
@@ -142,12 +152,11 @@ state_func = {'START':func.func0, 'LOGIN_IN':func.func1, 'LOGIN_UP':func.func2, 
             , 'SEND_MESSAGE':func.func11, 'EXIT':func.func12}
 
 if __name__ == "__main__":
-    connection1 = connection(1, 1, 1)
-    User1 = user('arseny', 'kysa', 3, 4, connection1)
+    #connection1 = connection(1, 1, 1)
+    #User1 = user('arseny', 'kysa', 3, 4, connection1)
     
-    state_func.get(state.state_names[User1.state])(User1)
-    print(User1.state)
-    
-    
-    
-    
+    #state_func.get(state.state_names[User1.state])(User1)
+    #print(User1.state)
+    #new_row = PrivateHash.insert(password = 7777).execute()
+    #print(new_row)
+    print('test')
