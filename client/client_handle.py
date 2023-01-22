@@ -1,4 +1,4 @@
-from db_class import *
+from client.local_objects import *
 from command_process import *
 from state_class import state
 

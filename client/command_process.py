@@ -3,8 +3,8 @@ PATH = "D:\pyton\messenger-1"
 sys.path.append(PATH)
 
 from state_class import *
-from db_class import *
-from request_class import *
+from client.local_objects import *
+from input_functions import *
 from peewee import *
 from server.server.db.db_model.db_model import *
 from datetime import datetime
