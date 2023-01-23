@@ -9,7 +9,6 @@ from peewee import *
 from server.server.db.db_model.db_model import *
 from datetime import datetime
 from color_print import *
-from server_requests import request
 
 
 class func:
@@ -191,6 +190,5 @@ if __name__ == "__main__":
     #print(User1.state)
     #print(request.Get_id(User, User.username == 'arseny'))
     #print(User.select().where(User.username == 'arseny').get().username)
-    #print(User.get(User.username == 'arseny').username)
-    print(request.Select(User, User.username == 'arseny', User.username).get().username)
+    print(User.get(User.username == 'arseny').username)
     
