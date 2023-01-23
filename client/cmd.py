@@ -31,7 +31,9 @@ def Choose_state(users:user)->int:
             list.append(state.state_names[state.tree[users.state][i]])
             string = state.phrase.get(state.state_names.index(list[i]))
             print(string, list[i])
+        """"""
         answer = input()
+        """"""
         if Check_for_cmd(answer): return cmd.get(answer)(users)
         if answer in list: return state.state_names.index(answer)
         else:

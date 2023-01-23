@@ -170,11 +170,9 @@ class func:
         creation_date = datetime.now().date()
         creation_time = datetime.now().time()
 
-        """"""
         message_content_id = MessageContent.insert(content = message_, content_date = creation_date, content_time = creation_time).execute()
         created_message_id = Message.insert(creator_user_id = users.id, create_date = creation_date, create_time = creation_time, content_id = message_content_id).execute()
         Chat_Message.insert(chat_id = users.curr_chat, message_id = created_message_id).execute()
-        """"""
 
         return Choose_state(users)
     
