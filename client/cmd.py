@@ -1,6 +1,7 @@
 from local_objects import *
 from state_class import state
 from server.server.db.db_model.db_model import *
+from server.server import *
 from datetime import datetime
 
 
@@ -29,8 +30,6 @@ def Choose_state(users:user)->int:
         list = []
         for i in range(len(state.tree[users.state])):
             list.append(state.state_names[state.tree[users.state][i]])
-            string = state.phrase.get(state.state_names.index(list[i]))
-            print(string, list[i])
         """"""
         answer = input()
         """"""

@@ -1,5 +1,3 @@
-from client.cmd import *
-
 exeption_list = ['']
 
 def input_template(input_atribute:str, input_message:str = None)->str:

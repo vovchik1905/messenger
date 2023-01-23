@@ -9,6 +9,7 @@ from peewee import *
 from server.server.db.db_model.db_model import *
 from datetime import datetime
 from color_print import *
+from client.cmd import *
 
 
 class func:

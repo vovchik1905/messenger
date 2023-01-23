@@ -1,10 +1,9 @@
 import socket
-
+from client.client_states import *
 
 HOST = "localhost"  # The remote host
 PORT = 5001  # The same port as used by the server
 IS_RECONNECT_ENABLED = False
-
 
 def client_part():
     is_started = False
@@ -15,8 +14,15 @@ def client_part():
             sock.connect((HOST, PORT))
             print("Client connected")
             while True:
-                # Input
-                data = input("Type the message to send:")
+                data_bytes = sock.recv(4096)
+                received_data = data_bytes.decode()
+
+                answer = prosess_request(received_data)
+
+                data_bytes = answer.encode()
+                sock.sendall(data_bytes)
+
+                """data = input("Type the message to send:")
                 if data == "exit":
                     print("Close by client")
                     sock.close()
@@ -35,7 +41,7 @@ def client_part():
                     sock.close()
                     print("Client disconnected")
                     yield None
-                yield data_bytes.decode()
+                yield data_bytes.decode()"""
 
 
 def main():
