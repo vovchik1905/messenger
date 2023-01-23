@@ -39,11 +39,7 @@ def message_handler(state: ServerState = 1, data_filter: FunctionType = lambda d
 @message_handler(state=1)
 async def callback_f1(server: BaseServer, conn: Connection = None, data: bytes = None):
     user_data =  data.decode()
-    if user_data == "vovik":
-        output_data = "$$$$$$"
-        await server.send(conn, output_data.encode('ascii'))
-    else:
-        await server.send(conn, data.upper())
+    await server.send(conn, data.upper())
 
 def start_messenger():
     server = BaseServer(ServerConfig.SERVER_HOST,

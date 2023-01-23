@@ -7,6 +7,7 @@ from local_objects import *
 from input_functions import *
 from peewee import *
 from server.server.db.db_model.db_model import *
+from server.server_app.base_server import BaseServer
 from datetime import datetime
 from color_print import *
 from client.cmd import *
@@ -17,40 +18,40 @@ class func:
         return Choose_state(users)
         #Connection.create(host = users.connection_.host, port = users.connection_.port, connection_start_datetime = datetime.now())
         
-    def func1(users:user)->state:#login while sing in
+    async def func1(users:user)->state:#login while sing in
 
         answer = input_template("логин")
         if Check_for_cmd(answer): return cmd.get(answer)(users)
         users.login = answer
 
-        """"""
         user_row = User.select().where(User.username == users.login)
-        """"""
 
         if user_row.exists():
             users.id = user_row.get().id 
-            return Choose_state(users)
+
+            """"""
+            return await Choose_state(users)
+            """"""
+
         else: 
             red_text("введен неверный логин, попробуйте еще раз")
             return users.state
 
-    def func2(users:user)->state:#create login
+    async def func2(users:user)->state:#create login
 
         answer = input_template("логин")
         if Check_for_cmd(answer): 
             return cmd.get(answer)(users)
         users.login = answer
 
-        """"""
         query = User.select().where(User.username == users.login)
-        """"""
 
         if query.exists(): 
             red_text("пользователь с таким логином уже существует\nпопробуйте ввести другой логин")
             return users.state
         else: return Choose_state(users)
 
-    def func3(users:user)->state:#password input while sing in
+    async def func3(users:user)->state:#password input while sing in
 
         """"""
         user_id = User.select().where(User.username == users.login).get().id
@@ -69,12 +70,12 @@ class func:
             red_text("введен неверный пароль")
             return users.state
 
-    def func4(users:user)->state:#password creation
+    async def func4(users:user)->state:#password creation
         users.password = input_template("пароль")
         if Check_for_cmd(users.password): return cmd.get(users.password)(users)
         else: return Choose_state(users)
 
-    def func5(users:user)->state:#password creation repeat
+    async def func5(users:user)->state:#password creation repeat
         repeat_password = input_template("пароль", "введите пароль повторно")
         if Check_for_cmd(repeat_password): return cmd.get(repeat_password)(users)
 
@@ -91,26 +92,24 @@ class func:
             red_text("введенные пароли не совпадают")
             return users.state
 
-    def func6(users:user)->state:#wait in menu
+    async def func6(users:user)->state:#wait in menu
         return Choose_state(users)
 
-    def func7(users:user):#select chat
-
-        """"""
+    async def func7(users:user):#select chat
         chat_list = User_Chat.select().where(User_Chat.user_id == users.id)
-        """"""
 
         if chat_list.exists():
             print("названия доступных чатов:")
             for chat in chat_list:
                 print(Chat.select().where(Chat.id == chat.chat_id).get().chat_name)
 
+            """"""
             Name = input_template("название чата")
+            """"""
+
             if Check_for_cmd(Name): return cmd.get(Name)(users)
 
-            """"""
             input_chat_id = Chat.select(Chat.id).where(Chat.chat_name == Name).get().id
-            """"""
 
             if input_chat_id is not None:
                 users.curr_chat = input_chat_id
@@ -122,7 +121,7 @@ class func:
             red_text("у вас пока нет доступых чатов")
             return state.reverse_tree[users.state][0]
 
-    def func8(users:user):#create chat
+    async def func8(users:user):#create chat
         user_name = input_template("имя пользователя")
         if Check_for_cmd(user_name): return cmd.get(user_name)(users)
 
@@ -153,16 +152,16 @@ class func:
             red_text("пользователь, которого вы хотите добавить в чат ,не найден")
             return users.state
 
-    def func9(users:user):#wait in chat
+    async def func9(users:user):#wait in chat
         return Choose_state(users)
 
-    def func10(users:user)->state:#message history
+    async def func10(users:user)->state:#message history
         #query = Chat_Message.get(Chat_Message.chat_id == users.curr_chat).message_id
         #query_2 = Message.select().where(Message.id in query).order_by(Message.create_date).get().content.id
         print("подгрузка сообщений пока не доступна")
         return Choose_state(users)
         
-    def func11(users:user)->state:#send messages
+    async def func11(users:user)->state:#send messages
         message_ = input_template("текст сообщения")
         if Check_for_cmd(message_): 
             return cmd.get(message_)(users)
@@ -176,8 +175,9 @@ class func:
 
         return Choose_state(users)
     
-    def func12(users:user)->state:#exit
-        quit()
+    async def func12(users:user, server:BaseServer,  conn:Connection = None)->state:#exit
+        await server.send(conn, 'EXIT')
+        #server.stop()
 
 
 state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'PASS_IN':func.func3

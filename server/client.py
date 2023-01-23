@@ -19,8 +19,15 @@ def client_part():
 
                 answer = prosess_request(received_data)
 
-                data_bytes = answer.encode()
-                sock.sendall(data_bytes)
+                if answer not in commands:
+                    data_bytes = answer.encode()
+                    sock.sendall(data_bytes)
+
+                if answer == 'EXIT':
+                    print("Closed by server")
+                    sock.close()
+                    print("Client disconnected")
+                    yield None
 
                 """data = input("Type the message to send:")
                 if data == "exit":
@@ -36,12 +43,7 @@ def client_part():
                 output_data = data_bytes.decode()
                 print(f"!!: {output_data}\n")
                 #print("Received:", repr(data))
-                if not output_data:
-                    print("Closed by server")
-                    sock.close()
-                    print("Client disconnected")
-                    yield None
-                yield data_bytes.decode()"""
+                """
 
 
 def main():
@@ -50,9 +52,7 @@ def main():
     while loop_checker:
         answer = next(client_gen)
         if answer is None:
-            loop_checker = False
-        else:
-            print(answer)                
+            loop_checker = False         
 
 if __name__ == "__main__":
     main()
