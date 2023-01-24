@@ -177,7 +177,6 @@ class func:
     
     async def func12(users:user, server:BaseServer,  conn:Connection = None)->state:#exit
         await server.send(conn, 'EXIT')
-        #server.stop()
 
 
 state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'PASS_IN':func.func3
