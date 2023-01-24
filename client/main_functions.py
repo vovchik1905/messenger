@@ -97,10 +97,7 @@ class func:
         return Choose_state(users)
 
     def func7(users:user)->state:#select chat
-
-        """"""
         chat_list = User_Chat.select().where(User_Chat.user_id == users.id)
-        """"""
 
         if chat_list.exists():
             print("названия доступных чатов:")
@@ -109,10 +106,7 @@ class func:
 
             Name = input_template("название чата")
             if Check_for_cmd(Name): return cmd.get(Name)(users)
-
-            """"""
             input_chat_id = Chat.select(Chat.id).where(Chat.chat_name == Name).get().id
-            """"""
 
             if input_chat_id is not None:
                 users.curr_chat = input_chat_id
@@ -159,17 +153,21 @@ class func:
         return Choose_state(users)
 
     def func10(users:user)->state:#message history
-        #query = Chat_Message.select().where(Chat_Message.chat_id == users.curr_chat).get().message_id
-        #query_2 = Message.select().where(Message.id in query).order_by(Message.create_date).get().content.id
-        #for message in query2:
-        #    print(message)
-        print("подгрузка сообщений пока не доступна")
+        query = Chat_Message.select().where(Chat_Message.chat_id == users.curr_chat)
+        list = []
+        for chat in query:
+            list.append(Message.select().where(Message.id == chat.message_id).order_by(Message.create_date).get().content_id)
+        for contentid in list:
+            bytes_data = MessageContent.select().where(MessageContent.id == contentid).get().content
+            print(bytes_data)
+        #print("подгрузка сообщений пока не доступна")
         return Choose_state(users)
         
     def func11(users:user)->state:#send messages
         message_ = input_template("текст сообщения")
         if Check_for_cmd(message_): 
             return cmd.get(message_)(users)
+        #message_ = bytes(message_, 'ASCII')
 
         creation_date = datetime.now().date()
         creation_time = datetime.now().time()
@@ -190,10 +188,11 @@ state_func = {'START':func.func0, 'SING_IN':func.func1, 'SING_UP':func.func2, 'P
             , 'SEND_MESSAGE':func.func11, 'EXIT':func.func12}
 
 if __name__ == "__main__":
-    
-    #state_func.get(state.state_names[User1.state])(User1)
+    connection1 = connection(1, 1, 1)
+    User1 = user('arseny', '111', 10, connection1, 1)
+    state_func.get(state.state_names[User1.state])(User1)
     #print(User1.state)
     #print(request.Get_id(User, User.username == 'arseny'))
     #print(User.select().where(User.username == 'arseny').get().username)
-    print(User.get(User.username == 'arseny').username)
+    #print(User.get(User.username == 'arseny').username)
     

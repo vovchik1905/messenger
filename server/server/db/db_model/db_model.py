@@ -54,7 +54,7 @@ class MessageContent(BaseModel):
     """
     
     """
-    content = BlobField(null=True, default=None)
+    content = CharField(null=True, default=None)
     content_date = DateField(null=True, default=None)
     content_time = TimeField(null=True, default=None)
 
