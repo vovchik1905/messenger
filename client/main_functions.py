@@ -46,9 +46,7 @@ class func:
             return cmd.get(answer)(users)
         users.login = answer
 
-        """"""
         query = User.select().where(User.username == users.login)
-        """"""
 
         if query.exists(): 
             red_text("пользователь с таким логином уже существует\nпопробуйте ввести другой логин")
