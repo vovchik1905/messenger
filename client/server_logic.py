@@ -9,7 +9,7 @@ def client_handle():
     """
 
     PORT = 5001
-    HOST = 'localhost'
+    HOST = 1
 
     main_connection = connection(PORT, HOST)
     main_user = user('arseny', 0, 0, 0, main_connection)
