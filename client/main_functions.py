@@ -12,19 +12,25 @@ from color_print import *
 
 
 class func:
+    """ класс функций отвечающих за обработку конкретного состояния
+        соответствие между названием состояния и функцией задается в словаре 'state_func'
+
+        Args:
+            users(user): все функции принимают объект класса пользователь
+        Return:
+            state: возвращают следующее состояние польователя
+
+        исключение составляет функция 'func12' отвечающая за завершение программы
+    """
     def func0(users:user)->state:#ожидание/начало дерева
         return Choose_state(users)
-        #Connection.create(host = users.connection_.host, port = users.connection_.port, connection_start_datetime = datetime.now())
         
     def func1(users:user)->state:#login while sing in
 
         answer = input_template("логин")
         if Check_for_cmd(answer): return cmd.get(answer)(users)
         users.login = answer
-
-        """"""
         user_row = User.select().where(User.username == users.login)
-        """"""
 
         if user_row.exists():
             users.id = user_row.get().id 
@@ -50,20 +56,17 @@ class func:
         else: return Choose_state(users)
 
     def func3(users:user)->state:#password input while sing in
-
-        """"""
         user_id = User.select().where(User.username == users.login).get().id
         password_id = User.select().where(User.id == user_id).get().private_info
-        """"""
 
         input_password = input_template("пароль")
         if Check_for_cmd(input_password): return cmd.get(input_password)(users)
 
-        """"""
         get_password = PrivateHash.select().where(PrivateHash.id == password_id).get().password
-        """"""
 
-        if get_password == input_password: return Choose_state(users)
+        if get_password == input_password: 
+            Connection.create(host = users.connection_.host, port = users.connection_.port, connection_start_datetime = datetime.now())
+            return Choose_state(users)
         else: 
             red_text("введен неверный пароль")
             return users.state
@@ -80,10 +83,9 @@ class func:
 
         if users.password == repeat_password: 
 
-            """"""
             new_row_id = PrivateHash.insert(password = users.password).execute()
             new_user_id = User.insert(username = users.login, create_date = datetime.now().date(), create_time = datetime.now().time(), private_info = new_row_id).execute()
-            """"""
+            Connection.create(host = users.connection_.host, port = users.connection_.port, connection_start_datetime = datetime.now())
 
             users.id = new_user_id
             return Choose_state(users)
