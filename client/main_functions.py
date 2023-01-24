@@ -94,7 +94,7 @@ class func:
     def func6(users:user)->state:#wait in menu
         return Choose_state(users)
 
-    def func7(users:user):#select chat
+    def func7(users:user)->state:#select chat
 
         """"""
         chat_list = User_Chat.select().where(User_Chat.user_id == users.id)
@@ -122,7 +122,7 @@ class func:
             red_text("у вас пока нет доступых чатов")
             return state.reverse_tree[users.state][0]
 
-    def func8(users:user):#create chat
+    def func8(users:user)->state:#create chat
         user_name = input_template("имя пользователя")
         if Check_for_cmd(user_name): return cmd.get(user_name)(users)
 
@@ -153,7 +153,7 @@ class func:
             red_text("пользователь, которого вы хотите добавить в чат ,не найден")
             return users.state
 
-    def func9(users:user):#wait in chat
+    def func9(users:user)->state:#wait in chat
         return Choose_state(users)
 
     def func10(users:user)->state:#message history

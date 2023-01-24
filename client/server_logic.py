@@ -3,6 +3,10 @@ from main_functions import *
 from state_class import state
 
 def client_handle():
+    """ основная функция
+        создает бесконечный цикл в котором осуществляет обработку и изменение состояния пользователя
+        цикл прерывается если получена команда 'EXIT'
+    """
 
     PORT = 5001
     HOST = 'localhost'

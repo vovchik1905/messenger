@@ -1,4 +1,3 @@
-
 def red_text(text):
     print("\033[31m{}\033[0m" .format(text))
 def green_text(text):
