@@ -155,17 +155,16 @@ class func:
         list = []
         for chat in query:
             list.append(Message.select().where(Message.id == chat.message_id).order_by(Message.create_date).get().content_id)
-        for contentid in list:
-            bytes_data = MessageContent.select().where(MessageContent.id == contentid).get().content
-            print(bytes_data)
-        #print("подгрузка сообщений пока не доступна")
+        if list is not None:
+            for contentid in list:
+                print(MessageContent.select().where(MessageContent.id == contentid).get().content)
+        else: print("в этом чате пока нет сообщений")
         return Choose_state(users)
         
     def func11(users:user)->state:#send messages
         message_ = input_template("текст сообщения")
         if Check_for_cmd(message_): 
             return cmd.get(message_)(users)
-        #message_ = bytes(message_, 'ASCII')
 
         creation_date = datetime.now().date()
         creation_time = datetime.now().time()
