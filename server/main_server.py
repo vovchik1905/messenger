@@ -1,10 +1,10 @@
 from __future__ import annotations
-from server_app.base_server import BaseServer, Callback
-from config import ServerConfig
-from server_app.connection import Connection
+from server.server_app.base_server import BaseServer, Callback
+from server.config import ServerConfig
+from server.server_app.connection import Connection
 from  types import FunctionType
 from typing import Callable, Any
-from server_app.server_state import ServerState
+from server.server_app.server_state import ServerState
 
 
 class DataFilters:

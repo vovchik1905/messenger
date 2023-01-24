@@ -1,3 +1,7 @@
+import sys
+PATH = "D:\pyton\messenger-1"
+sys.path.append(PATH)
+
 from local_objects import *
 from state_class import state
 from server.server.db.db_model.db_model import *

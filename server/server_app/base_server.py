@@ -3,7 +3,7 @@ from  types import FunctionType
 import asyncio
 import socket
 from .connection import Connection
-from server_app.server_state import ServerState
+from server.server_app.server_state import ServerState
 
 class Callback:
     def __init__(self, callback_action: FunctionType,

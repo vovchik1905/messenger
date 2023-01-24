@@ -75,6 +75,7 @@ class func:
 
     def func5(users:user)->state:#password creation repeat
         repeat_password = input_template("пароль", "введите пароль повторно")
+
         if Check_for_cmd(repeat_password): return cmd.get(repeat_password)(users)
 
         if users.password == repeat_password: 
@@ -156,8 +157,10 @@ class func:
         return Choose_state(users)
 
     def func10(users:user)->state:#message history
-        #query = Chat_Message.get(Chat_Message.chat_id == users.curr_chat).message_id
+        #query = Chat_Message.select().where(Chat_Message.chat_id == users.curr_chat).get().message_id
         #query_2 = Message.select().where(Message.id in query).order_by(Message.create_date).get().content.id
+        #for message in query2:
+        #    print(message)
         print("подгрузка сообщений пока не доступна")
         return Choose_state(users)
         
