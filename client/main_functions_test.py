@@ -7,7 +7,7 @@ test_user = user('TEST_LOGIN_1', 0, 0, 4)
 #во всех последующих тестах вы сверяем реальное изменение состояния пользователя с ожидаемым
 
 class Teststart(unittest.TestCase):
-    @patch('builtins.input', side_effect=['SING_IN'])
+   # @patch('builtins.input', side_effect=['SING_IN'])
     def test_first_var(self, users:user):
         users.state = 0
         self.assertEqual(func.func0(users), 1)
